@@ -1,8 +1,9 @@
 <h1>Anchor#index</h1>
 
 <ul>
-  <li><%= link_to "turbo", anchor_redirect_path(anchor: "target") %></li>
-  <li><%= link_to "no turbo", anchor_redirect_path(anchor: "target"), data: { turbo: false } %></li>
+  <li><%= link_to "turbo (patch)", anchor_redirect_path(anchor: "target"), data: { "turbo-method": :patch } %></li>
+  <li><%= link_to "turbo (get)", anchor_redirect_path(anchor: "target") %></li>
+  <li><%= link_to "no turbo (get)", anchor_redirect_path(anchor: "target"), data: { turbo: false } %></li>
 </ul>
 
 <ul>
@@ -69,9 +70,9 @@
 </ul>
 
 
-<div id="target">
+<turbo-frame id="target">
  <h1>TARGET</h1>
  <p>
     This is what we want to get to!
  </p>
-</div>
+</turbo-frame>
