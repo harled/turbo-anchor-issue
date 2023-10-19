@@ -3,6 +3,6 @@ class AnchorController < ApplicationController
   end
 
   def redirect
-    redirect_to anchor_index_path(anchor: "target") #, status: :see_other
+    redirect_to anchor_index_path(anchor: "target"), status: :see_other
   end
 end
