@@ -1,0 +1,26 @@
+version: '3.9'
+
+volumes:
+  bundle:
+  public:
+
+services:
+  turbo_anchor_issue:
+    container_name: turbo_anchor_issue
+    build:
+      context: .
+      dockerfile: docker/app/Dockerfile
+    image: turbo_anchor_issue:dev
+    environment:
+      - RAILS_ENV=development
+      - RAILS_LOG_TO_STDOUT=true
+    working_dir: /app
+    ports:
+      - 3000:3000
+    stdin_open: true
+    tty: true
+    volumes:
+      - .:/app:cached
+      - bundle:/usr/local/bundle
+    tmpfs:
+      - /tmp
