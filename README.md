@@ -1,24 +1,18 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+The purpose of this repository is to easily show the issue with Ruby on Rails and Turbo using a redirect with an 
+anchor for a PATCH (non-GET?) request.
 
-Things you may want to cover:
+The expected behaviour in all cases is to arrive at `/anchor/index#target` and scroll to the element with `id="target"`.
+What we see is that a get with turbo works (but the hash/fragment isn't updated in the URL), patch with turbo doesn't work
+and get without turbo works (scrolls and updates the URL).
 
-* Ruby version
+| method | turbo | expected | actual | scrolls? |
+| get    | yes   | /anchor/index#target | /anchor/index | yes |
+| patch  | yes   | /anchor/index#target | /anchor/index | no |
+| get    | no    | /anchor/index#target | /anchor/index#target | yes |
 
-* System dependencies
 
-* Configuration
+Related discussions:
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+1. https://github.com/hotwired/turbo/issues/211
