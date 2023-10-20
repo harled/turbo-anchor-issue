@@ -8,6 +8,7 @@ What we see is that a get with turbo works (but the hash/fragment isn't updated 
 and get without turbo works (scrolls and updates the URL).
 
 | method | turbo | expected | actual | scrolls? |
+| -------|-------|----------|--------|----------|
 | get    | yes   | /anchor/index#target | /anchor/index | yes |
 | patch  | yes   | /anchor/index#target | /anchor/index | no |
 | get    | no    | /anchor/index#target | /anchor/index#target | yes |
