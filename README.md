@@ -16,7 +16,7 @@ and get without turbo works (scrolls and updates the URL).
 
 ## Testing
 
-* Open the project in vscode as a remote container and run `bundle exec rails c -b 0.0.0.0`
+* Open the project in vscode as a remote container and run `bundle exec rails s -b 0.0.0.0`
 * Alternatively, in a local env run `bundle install` and `bundle exec rails s`
 
 ## Related discussions:
