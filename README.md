@@ -13,6 +13,13 @@ and get without turbo works (scrolls and updates the URL).
 | get    | no    | /anchor/index#target | /anchor/index#target | yes |
 
 
-Related discussions:
+## Testing
+
+* Open the project in vscode as a remote container and run `bundle exec rails c -b 0.0.0.0`
+* Alternatively, in a local env run `bundle install` and `bundle exec rails s`
+
+## Related discussions:
 
 1. https://github.com/hotwired/turbo/issues/211
+2. https://github.com/whatwg/fetch/issues/1167
+3. https://turbo.hotwired.dev/handbook/drive
