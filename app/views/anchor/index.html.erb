@@ -1,6 +1,18 @@
 <h1>Turbo Anchors</h1>
 
 <p>
+ The purpose of this site is to demonstrate how turbo behaves with anchors. A common pattern that we use is in-app
+ notifications (with noticed of cours!), where we have an endpoint to mark a notification as read and then redirect 
+ the user to the relevant page. The general flow looks like:
+</p>
+
+<ol>
+  <li>Link clicked to follow notification (i.e. user mentioned in a discussion comment)</li>
+  <li>Notification marked as read</li>
+  <li>User redirected to the related notification endpoint (i.e. a specific comment added to a discussion thread)</li>
+</ol>
+
+<p>
  The controller endpoint always returns with a redirect to this page, with an anchor of <code>comment_100</code>. 
 </p>
 
@@ -25,7 +37,7 @@
     <td>comment_100</td>
     <td><%= link_to "test", anchor_redirect_path, data: { "turbo-method": :patch } %></td>
     <td style="color: red;">fail</td>
-    <td></td>
+    <td>Does nothing.</td>
   </tr>
   <tr>
     <td>get</td>
@@ -34,7 +46,7 @@
     <td>comment_100</td>
     <td><%= link_to "test", anchor_redirect_path %></td>
     <td style="color: red;">fail</td>
-    <td></td>
+    <td>Does nothing.</td>
   </tr>
   <tr>
     <td>get</td>
@@ -43,7 +55,7 @@
     <td>comment_100</td>
     <td><%= link_to "test", anchor_redirect_path, data: { turbo: false } %></td>
     <td style="color: green;">pass</td>
-    <td></td>
+    <td>No turbo, works as expected.</td>
   </tr>
   <tr>
     <td>patch</td>
@@ -52,7 +64,7 @@
     <td>comment_100</td>
     <td><%= link_to "test", anchor_redirect_path(anchor: "comment_100"), data: { "turbo-method": :patch } %></td>
     <td style="color: red;">fail</td>
-    <td></td>
+    <td>Specify the anchor in the link.</td>
   </tr>
   <tr>
     <td>get</td>
@@ -61,7 +73,7 @@
     <td>comment_100</td>
     <td><%= link_to "test", anchor_redirect_path(anchor: "comment_100") %></td>
     <td style="color: green;">pass</td>
-    <td>Pass but shouldn't!</td>
+    <td>Specify the anchor in the link and it works "by accident".</td>
   </tr>
   <tr>
     <td>get</td>
@@ -70,7 +82,7 @@
     <td>bad_comment</td>
     <td><%= link_to "test", anchor_redirect_path(anchor: "bad_comment") %></td>
     <td style="color: red;">fail</td>
-    <td></td>
+    <td>Also works in a completely unexpected way. The link_to anchor dominates the Location url.</td>
   </tr>
 </table>
 
@@ -88,7 +100,8 @@
 <turbo-frame id="comment_100" style="background-color: green;">
  <h1>COMMENT 100</h1>
  <p>
-    This is what we want to get to!
+    This is the comment that we were notified about and want to scroll to automatically 
+    via the <code>comment_100</code> page anchor.
  </p>
 </turbo-frame>
 
@@ -101,6 +114,7 @@
 <turbo-frame id="bad_comment">
  <h1>BAD COMMENT</h1>
  <p>
-    How did we get here? The <code>link_to</code> anchor is taking over the redirect to anchor.
+    How did we get here? The <code>link_to</code> anchor is taking over the redirect to anchor (i.e. the browser Location
+    is <code>comment_100</code> but the link_to was <code>bad_comment</code>).
  </p>
 </turbo-frame>
