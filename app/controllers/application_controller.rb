@@ -10,18 +10,31 @@ class ApplicationController < ActionController::Base
   def redirect_to(options = {}, response_options = {})
 
     # https://edgeapi.rubyonrails.org/classes/ActionController/Redirecting.html
-    if options.is_a?(String)
+    # update rails upgrade guide
+    if options.is_a?(String) && 
+      ["GET", "PATCH", "POST"].include?(request.method) && 
+      [:see_other, 303].include?(response_options[:status])
+
+      # parse the uri, where options is the string of the url
       uri = URI.parse(options)
 
       # check if there is a fragment present and the status code is :see_other
-      if uri.fragment.present? && [:see_other, 303].include?(response_options[:status])
+      if uri.fragment.present?
         params = uri.query.present? ? CGI.parse(uri.query) : {}
+
+        # set a new query parameter of _anchor, with the anchor value
         params["_anchor"] = uri.fragment
+
+        # re-encode the query parameters
         uri.query = URI.encode_www_form(params)
+
+        # clear the fragment
         uri.fragment = ""
       end
       options = uri.to_s
     end
+
+    # call the regular redirect_to method
     super
   end
 end

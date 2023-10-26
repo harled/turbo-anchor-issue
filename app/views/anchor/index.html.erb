@@ -33,58 +33,60 @@
   <tr>
     <td>patch</td>
     <td>yes</td>
-    <td><%= anchor_redirect_path %></td>
+    <td><%= anchor_mark_as_read_path %></td>
     <td>comment_100</td>
-    <td><%= link_to "test", anchor_redirect_path, data: { "turbo-method": :patch } %></td>
+    <td><%= link_to "test", anchor_mark_as_read_path, data: { "turbo-method": :patch } %></td>
     <td style="color: red;">fail</td>
     <td>Does nothing.</td>
   </tr>
   <tr>
     <td>get</td>
     <td>yes</td>
-    <td><%= anchor_redirect_path %></td>
+    <td><%= anchor_mark_as_read_path %></td>
     <td>comment_100</td>
-    <td><%= link_to "test", anchor_redirect_path %></td>
+    <td><%= link_to "test", anchor_mark_as_read_path %></td>
     <td style="color: red;">fail</td>
     <td>Does nothing.</td>
   </tr>
   <tr>
     <td>get</td>
     <td>no</td>
-    <td><%= anchor_redirect_path %></td>
+    <td><%= anchor_mark_as_read_path %></td>
     <td>comment_100</td>
-    <td><%= link_to "test", anchor_redirect_path, data: { turbo: false } %></td>
+    <td><%= link_to "test", anchor_mark_as_read_path, data: { turbo: false } %></td>
     <td style="color: green;">pass</td>
     <td>No turbo, works as expected.</td>
   </tr>
   <tr>
     <td>patch</td>
     <td>yes</td>
-    <td><%= anchor_redirect_path(anchor: "comment_100") %></td>
+    <td><%= anchor_mark_as_read_path(anchor: "comment_100") %></td>
     <td>comment_100</td>
-    <td><%= link_to "test", anchor_redirect_path(anchor: "comment_100"), data: { "turbo-method": :patch } %></td>
+    <td><%= link_to "test", anchor_mark_as_read_path(anchor: "comment_100"), data: { "turbo-method": :patch } %></td>
     <td style="color: red;">fail</td>
     <td>Specify the anchor in the link.</td>
   </tr>
   <tr>
     <td>get</td>
     <td>yes</td>
-    <td><%= anchor_redirect_path(anchor: "comment_100") %></td>
+    <td><%= anchor_mark_as_read_path(anchor: "comment_100") %></td>
     <td>comment_100</td>
-    <td><%= link_to "test", anchor_redirect_path(anchor: "comment_100") %></td>
+    <td><%= link_to "test", anchor_mark_as_read_path(anchor: "comment_100") %></td>
     <td style="color: green;">pass</td>
     <td>Specify the anchor in the link and it works "by accident".</td>
   </tr>
   <tr>
     <td>get</td>
     <td>yes</td>
-    <td><%= anchor_redirect_path(anchor: "bad_comment") %></td>
+    <td><%= anchor_mark_as_read_path(anchor: "bad_comment") %></td>
     <td>bad_comment</td>
-    <td><%= link_to "test", anchor_redirect_path(anchor: "bad_comment") %></td>
+    <td><%= link_to "test", anchor_mark_as_read_path(anchor: "bad_comment") %></td>
     <td style="color: red;">fail</td>
     <td>Also works in a completely unexpected way. The link_to anchor dominates the Location url.</td>
   </tr>
 </table>
+
+<% if false %>
 
 <p>
   Here are some sample comments.
@@ -118,3 +120,5 @@
     is <code>comment_100</code> but the link_to was <code>bad_comment</code>).
  </p>
 </turbo-frame>
+
+<% end %>

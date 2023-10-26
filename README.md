@@ -24,3 +24,4 @@ and get without turbo works (scrolls and updates the URL).
 1. https://github.com/hotwired/turbo/issues/211
 2. https://github.com/whatwg/fetch/issues/1167
 3. https://turbo.hotwired.dev/handbook/drive
+4. https://github.com/hotwired/turbo/issues/354

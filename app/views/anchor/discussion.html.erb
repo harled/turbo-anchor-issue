@@ -1,0 +1,36 @@
+<h1>Turbo Anchors</h1>
+
+<%= link_to "Back to Index", anchor_index_path %>
+
+<p>
+  Here are some sample comments.
+</p>
+
+<ul>
+  <% (1..99).each do |comment| %>
+ <li>This is a sample comment <%= comment %></li>
+  <% end %>
+</ul>
+
+
+<turbo-frame id="comment_100" style="background-color: green;">
+ <h1>COMMENT 100</h1>
+ <p>
+    This is the comment that we were notified about and want to scroll to automatically 
+    via the <code>comment_100</code> page anchor.
+ </p>
+</turbo-frame>
+
+<ul>
+  <% (101..200).each do |comment| %>
+ <li>This is a sample comment <%= comment %></li>
+  <% end %>
+</ul>
+
+<turbo-frame id="bad_comment">
+ <h1>BAD COMMENT</h1>
+ <p>
+    How did we get here? The <code>link_to</code> anchor is taking over the redirect to anchor (i.e. the browser Location
+    is <code>comment_100</code> but the link_to was <code>bad_comment</code>).
+ </p>
+</turbo-frame>
