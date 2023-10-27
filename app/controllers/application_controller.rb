@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
-  # Custom redirect_to logic to try and transparently support anchors with redirects so that Turbo
+  # Custom redirect_to logic to transparently support redirects with anchors so Turbo
   # works as expected. The general approach is to leverage a query parameter to proxy the anchor value 
-  # (as the anchor/fragment is lost when using Turbo and the browser fetch follow code). 
+  # (as the anchor/fragment is lost when using Turbo and the browser fetch() follow code). 
   #
   # This code looks for an anchor (#comment_100), if it finds one it will add a new query parameter of 
   # "_anchor=comment_100" and then remove the anchor value.
@@ -10,15 +10,16 @@ class ApplicationController < ActionController::Base
   def redirect_to(options = {}, response_options = {})
 
     # https://edgeapi.rubyonrails.org/classes/ActionController/Redirecting.html
-    # update rails upgrade guide
+    # We want to be conservative on when this is applied. Only a string path is allowed,
+    # a limited set of methods and only the 303/see_other status code
     if options.is_a?(String) && 
-      ["GET", "PATCH", "POST"].include?(request.method) && 
+      ["GET", "PATCH", "PUT", "POST", "DELETE"].include?(request.request_method) && 
       [:see_other, 303].include?(response_options[:status])
 
       # parse the uri, where options is the string of the url
       uri = URI.parse(options)
 
-      # check if there is a fragment present and the status code is :see_other
+      # check if there is a fragment present
       if uri.fragment.present?
         params = uri.query.present? ? CGI.parse(uri.query) : {}
 
