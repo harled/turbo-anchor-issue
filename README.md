@@ -7,12 +7,10 @@ The expected behaviour in all cases is to arrive at `/anchor/index#target` and s
 What we see is that a get with turbo works (but the hash/fragment isn't updated in the URL), patch with turbo doesn't work
 and get without turbo works (scrolls and updates the URL).
 
-| method | turbo | expected | actual | scrolls? |
-| -------|-------|----------|--------|----------|
-| get    | yes   | /anchor/index#target | /anchor/index | yes |
-| patch  | yes   | /anchor/index#target | /anchor/index | no |
-| get    | no    | /anchor/index#target | /anchor/index#target | yes |
+The full details about this repo can be seen on the Harled Inc blog:
 
+* [Part 1 - The Problem](https://harled.ca/blog/turbos_support_for_redirects_with_anchors)
+* [Part 2 - The Solution](https://harled.ca/blog/working_around_turbo_redirects_with_anchors)
 
 ## Testing
 
