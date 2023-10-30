@@ -2,8 +2,9 @@
 import "@hotwired/turbo-rails"
 import "controllers"
 
-// whenever render is called, we want to see if there is a rails _anchor query parameter,
-// if so, we want to transform it into a proper hash and then try to scroll to it
+// Whenever render is called, we want to see if there is a rails _anchor query parameter,
+// if so, we want to transform it into a proper hash and then try to scroll to it. Find
+// the associated server side code in a custom "redirect_to" method.
 addEventListener('turbo:load', transformAnchorParamToHash)
 
 function transformAnchorParamToHash(event) {
