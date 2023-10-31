@@ -7,9 +7,8 @@ import "controllers"
 // the associated server side code in a custom "redirect_to" method.
 addEventListener('turbo:load', transformAnchorParamToHash)
 
-function transformAnchorParamToHash(event) {
+function transformAnchorParamToHash (event) {
   const url = new URL(location.href)
-
   const urlParams = new URLSearchParams(url.search)
 
   // _anchor is a special query parameter added by a custom rails redirect_to
@@ -22,8 +21,17 @@ function transformAnchorParamToHash(event) {
     // update the hash to be the custom anchor
     url.hash = anchorParam
 
+    // create a new URL with the new parameters
+    let searchString = ''
+    if (urlParams.size > 0) {
+      searchString = '?' + urlParams.toString()
+    }
+
+    // the new relative path
+    const newPath = url.pathname + searchString + url.hash
+
     // rewrite the history to remove the custom _anchor query parameter and include the hash
-    history.replaceState({}, document.title, url.pathname + urlParams + url.hash)
+    history.replaceState({}, document.title, newPath)
   }
 
   // scroll to the anchor
@@ -31,13 +39,29 @@ function transformAnchorParamToHash(event) {
     const anchorId = location.hash.replace('#', '')
     const element = document.getElementById(anchorId)
     if (element) {
+      const stickyHeaderHeight = calculcateStickyHeaderHeight()
+      const elementTop = element.getBoundingClientRect().top
+      const elementTopWithHeaderOffset = elementTop + window.scrollY - stickyHeaderHeight
+
       // for whatever reason we can't scroll to the element immediately, giving in a slight
       // delay corrects the issue
       setTimeout(function () {
-        element.scrollIntoView()
+        window.scrollTo({ top: elementTopWithHeaderOffset, behavior: 'smooth' })
       }, 100)
     } else {
       console.error(`scrollToAnchor: element was not found with id ${anchorId}`)
     }
   }
+}
+
+// take into account any possible sticky elements (which are assumed to be headers) and sum up their
+// heights to use as an offset
+function calculcateStickyHeaderHeight () {
+  let stickyHeaderHeight = 0
+  const allElements = document.querySelectorAll('*')
+
+  const stickyElements = [].filter.call(allElements, el => getComputedStyle(el).position === 'sticky')
+  stickyElements.forEach(el => { stickyHeaderHeight += el.getBoundingClientRect().height })
+
+  return stickyHeaderHeight
 }
